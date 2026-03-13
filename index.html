@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeleSearch - Discover Telegram Groups & Channels</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        telegram: '#0088cc',
+                        'telegram-dark': '#006699'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center text-white">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">TeleSearch</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-blue-600 dark:text-blue-400 font-medium">Home</a>
+                    <a href="categories.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Categories</a>
+                    <a href="top.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Top Groups</a>
+                    <a href="submit.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Submit Group</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20">Home</a>
+                <a href="categories.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Categories</a>
+                <a href="top.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Top Groups</a>
+                <a href="submit.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Submit Group</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-32 bg-white dark:bg-gray-900">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/10 dark:to-cyan-900/10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>Discover 25,000+ Telegram communities</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+                Find Your Community
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+                Search and join the best Telegram groups and channels. From crypto trading to anime discussions, find your tribe.
+            </p>
+            
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto mb-8">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                </div>
+                <input 
+                    type="text" 
+                    id="heroSearch"
+                    class="w-full pl-12 pr-32 py-4 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all shadow-lg"
+                    placeholder="Search Telegram groups and channels..."
+                >
+                <button onclick="handleHeroSearch()" class="absolute right-2 top-2 bottom-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors shadow-md">
+                    Search
+                </button>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <span>Popular:</span>
+                <button onclick="quickSearch('crypto')" class="hover:text-blue-600 underline cursor-pointer">Crypto</button>
+                <span>•</span>
+                <button onclick="quickSearch('programming')" class="hover:text-blue-600 underline cursor-pointer">Programming</button>
+                <span>•</span>
+                <button onclick="quickSearch('gaming')" class="hover:text-blue-600 underline cursor-pointer">Gaming</button>
+                <span>•</span>
+                <button onclick="quickSearch('movies')" class="hover:text-blue-600 underline cursor-pointer">Movies</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-16 bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-3">Browse by Category</h2>
+                <p class="text-gray-600 dark:text-gray-400">Explore groups across different interests</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="categoriesGrid">
+                <!-- Categories injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Groups Section -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">Popular Groups</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Trending communities this week</p>
+                </div>
+                <a href="top.html" class="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                    View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="popularGroups">
+                <!-- Groups injected by JS -->
+            </div>
+            
+            <div class="mt-10 text-center md:hidden">
+                <a href="top.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                    View All Groups <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">25K+</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Active Groups</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">1M+</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Daily Searches</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">50M+</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Total Members</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">9</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Categories</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-cyan-500">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Have a Telegram Group?</h2>
+            <p class="text-white/90 text-lg mb-8">Submit your group to reach thousands of potential members and grow your community.</p>
+            <a href="submit.html" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                Submit Your Group
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center text-white">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">TeleSearch</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-sm">
+                        The largest directory of Telegram groups and channels. Discover, join, and grow your community with us.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="categories.html" class="hover:text-white transition">Categories</a></li>
+                        <li><a href="top.html" class="hover:text-white transition">Top Groups</a></li>
+                        <li><a href="submit.html" class="hover:text-white transition">Submit Group</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-4">Legal</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                © 2024 TeleSearch. Not affiliated with Telegram.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            renderHomeCategories();
+            renderPopularGroups();
+            
+            // Hero search handler
+            document.getElementById('heroSearch').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleHeroSearch();
+            });
+        });
+
+        function handleHeroSearch() {
+            const query = document.getElementById('heroSearch').value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        function quickSearch(term) {
+            window.location.href = `search.html?q=${encodeURIComponent(term)}`;
+        }
+    </script>
+</body>
+</html>
