@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Groups - TeleSearch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0088cc',
+                        secondary: '#24a1de',
+                        dark: '#0f172a',
+                        darker: '#020617'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-darker text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <i data-lucide="send" class="w-8 h-8 text-primary"></i>
+                    <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TeleSearch</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition">Home</a>
+                    <a href="categories.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition">Categories</a>
+                    <a href="top.html" class="text-primary font-medium">Top Groups</a>
+                    <a href="submit.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition">Submit Group</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition">About</a>
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+                </div>
+
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-dark border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Home</a>
+                <a href="categories.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Categories</a>
+                <a href="top.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary bg-primary/10">Top Groups</a>
+                <a href="submit.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Submit Group</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-white dark:bg-dark border-b border-gray-200 dark:border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold mb-4">Top Telegram Groups</h1>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    The most popular and fastest-growing Telegram communities, ranked by member count.
+                </p>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <div class="text-center p-4 bg-gray-50 dark:bg-darker rounded-xl">
+                    <p class="text-3xl font-bold text-primary" id="totalGroups">0</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Groups</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 dark:bg-darker rounded-xl">
+                    <p class="text-3xl font-bold text-primary" id="totalMembers">0</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Members</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 dark:bg-darker rounded-xl">
+                    <p class="text-3xl font-bold text-primary" id="avgMembers">0</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Avg Members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Groups List -->
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Leaderboard</h2>
+                <div class="flex gap-2">
+                    <button onclick="renderTopGroups('all')" class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium">All Time</button>
+                    <button onclick="renderTopGroups('month')" class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-700 transition">This Month</button>
+                </div>
+            </div>
+            
+            <div id="topGroupsList" class="space-y-4">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-12 bg-primary dark:bg-secondary/20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Want to see your group here?</h2>
+            <p class="text-white/90 mb-6">Submit your Telegram group to get featured on our leaderboard</p>
+            <a href="submit.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary font-bold rounded-full hover:bg-gray-100 transition">
+                Submit Your Group
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-dark border-t border-gray-200 dark:border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+            © 2024 TeleSearch. Not affiliated with Telegram.
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            calculateStats();
+            renderTopGroups('all');
+        });
+
+        function calculateStats() {
+            const total = mockGroups.length;
+            const members = mockGroups.reduce((sum, g) => sum + g.members, 0);
+            const avg = Math.round(members / total);
+            
+            document.getElementById('totalGroups').textContent = total;
+            document.getElementById('totalMembers').textContent = formatNumber(members);
+            document.getElementById('avgMembers').textContent = formatNumber(avg);
+        }
+
+        function renderTopGroups(period) {
+            // Sort by members descending
+            const sorted = [...mockGroups].sort((a, b) => b.members - a.members);
+            
+            const container = document.getElementById('topGroupsList');
+            container.innerHTML = sorted.map((group, index) => {
+                const rank = index + 1;
+                let rankColor = 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400';
+                if (rank === 1) rankColor = 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border-2 border-yellow-400';
+                if (rank === 2) rankColor = 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-2 border-gray-400';
+                if (rank === 3) rankColor = 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 border-2 border-orange-400';
+                
+                return `
+                    <div class="flex items-center gap-4 bg-white dark:bg-dark p-4 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary dark:hover:border-primary transition group">
+                        <div class="flex-shrink-0 w-12 h-12 ${rankColor} rounded-full flex items-center justify-center font-bold text-lg">
+                            ${rank}
+                        </div>
+                        
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm">
+                            ${group.name.substring(0, 2).toUpperCase()}
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-bold truncate group-hover:text-primary transition">${group.name}</h3>
+                                <span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 capitalize">
+                                    ${group.category}
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 truncate">${group.description}</p>
+                        </div>
+                        
+                        <div class="hidden sm:block text-right mr-4">
+                            <p class="font-bold text-primary">${formatNumber(group.members)}</p>
+                            <p class="text-xs text-gray-500">members</p>
+                        </div>
+                        
+                        <a href="${group.link}" target="_blank" class="flex-shrink-0 px-4 py-2 bg-primary hover:bg-secondary text-white rounded-lg text-sm font-medium transition">
+                            Join
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
