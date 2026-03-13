@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - TeleSearch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        telegram: '#0088cc',
+                        'telegram-dark': '#006699'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center text-white">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">TeleSearch</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Home</a>
+                    <a href="categories.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Categories</a>
+                    <a href="top.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Top Groups</a>
+                    <a href="submit.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Submit Group</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+                </div>
+
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Home</a>
+                <a href="categories.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Categories</a>
+                <a href="top.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Top Groups</a>
+                <a href="submit.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Submit Group</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Header -->
+    <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
+                <div class="w-full md:w-96 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                        placeholder="Search groups..."
+                    >
+                </div>
+                
+                <div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+                    <select id="categoryFilter" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-blue-500 text-sm">
+                        <option value="">All Categories</option>
+                        <option value="crypto">Crypto</option>
+                        <option value="trading">Trading</option>
+                        <option value="programming">Programming</option>
+                        <option value="anime">Anime</option>
+                        <option value="movies">Movies</option>
+                        <option value="education">Education</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="jobs">Jobs</option>
+                        <option value="news">News</option>
+                    </select>
+                    
+                    <select id="sortFilter" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-blue-500 text-sm">
+                        <option value="members">Most Members</option>
+                        <option value="newest">Recently Added</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <p class="text-gray-600 dark:text-gray-400">
+                    Found <span id="resultsCount" class="font-semibold text-blue-600 dark:text-blue-400">0</span> results
+                    <span id="searchQueryDisplay" class="hidden">
+                        for "<span class="font-semibold"></span>"
+                    </span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Grid -->
+    <section class="py-8 flex-grow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Results injected by JS -->
+            </div>
+            
+            <div id="noResults" class="hidden text-center py-20">
+                <i data-lucide="search-x" class="w-16 h-16 mx-auto text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">No groups found</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your search or filters</p>
+                <button onclick="clearFilters()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Clear Filters
+                </button>
+            </div>
+
+            <div class="mt-12 text-center">
+                <button id="loadMoreBtn" class="px-8 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition font-medium hidden">
+                    Load More Results
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            © 2024 TeleSearch. Not affiliated with Telegram.
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        let currentPage = 1;
+        let currentResults = [];
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            
+            // Parse URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || '';
+            const category = urlParams.get('category') || '';
+            
+            // Set initial values
+            document.getElementById('searchInput').value = query;
+            document.getElementById('categoryFilter').value = category;
+            
+            if (query) {
+                document.getElementById('searchQueryDisplay').classList.remove('hidden');
+                document.querySelector('#searchQueryDisplay span').textContent = query;
+            }
+            
+            // Perform search
+            performSearch();
+            
+            // Event listeners
+            document.getElementById('searchInput').addEventListener('input', debounce(performSearch, 300));
+            document.getElementById('categoryFilter').addEventListener('change', performSearch);
+            document.getElementById('sortFilter').addEventListener('change', performSearch);
+        });
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+            
+            // Update URL
+            const url = new URL(window.location);
+            if (query) url.searchParams.set('q', query);
+            else url.searchParams.delete('q');
+            if (category) url.searchParams.set('category', category);
+            else url.searchParams.delete('category');
+            window.history.replaceState({}, '', url);
+            
+            // Filter data
+            let results = mockGroups.filter(group => {
+                const matchesQuery = !query || 
+                    group.name.toLowerCase().includes(query) || 
+                    group.description.toLowerCase().includes(query);
+                const matchesCategory = !category || group.category === category;
+                return matchesQuery && matchesCategory;
+            });
+            
+            // Sort
+            results = sortGroups(results, sort);
+            
+            currentResults = results;
+            currentPage = 1;
+            
+            renderResults(results.slice(0, 15));
+            updateResultsCount(results.length);
+            
+            // Show/hide load more
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (results.length > 15) {
+                loadMoreBtn.classList.remove('hidden');
+                loadMoreBtn.onclick = () => loadMore(results);
+            } else {
+                loadMoreBtn.classList.add('hidden');
+            }
+        }
+
+        function sortGroups(groups, sortType) {
+            const sorted = [...groups];
+            switch(sortType) {
+                case 'members':
+                    return sorted.sort((a, b) => b.members - a.members);
+                case 'newest':
+                    return sorted.sort((a, b) => new Date(b.created) - new Date(a.created));
+                case 'name':
+                    return sorted.sort((a, b) => a.name.localeCompare(b.name));
+                default:
+                    return sorted;
+            }
+        }
+
+        function renderResults(groups) {
+            const container = document.getElementById('searchResults');
+            const noResults = document.getElementById('noResults');
+            
+            if (groups.length === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            container.innerHTML = groups.map(group => createGroupCard(group)).join('');
+            lucide.createIcons();
+        }
+
+        function loadMore(allResults) {
+            const start = currentPage * 15;
+            const end = start + 15;
+            const moreGroups = allResults.slice(start, end);
+            
+            const container = document.getElementById('searchResults');
+            container.innerHTML += moreGroups.map(group => createGroupCard(group)).join('');
+            lucide.createIcons();
+            
+            currentPage++;
+            
+            if (end >= allResults.length) {
+                document.getElementById('loadMoreBtn').classList.add('hidden');
+            }
+        }
+
+        function updateResultsCount(count) {
+            document.getElementById('resultsCount').textContent = count;
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('sortFilter').value = 'members';
+            performSearch();
+        }
+    </script>
+</body>
+</html>
